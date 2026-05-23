@@ -1,0 +1,324 @@
+/* ==========================================================================
+   NYCS - DESIGN SYSTEM & BRANDING STYLE
+   ========================================================================== */
+
+:root {
+  --color-bg: #05050a;
+  --color-bg-darker: #020204;
+  --color-neon-primary: #00f3ff;   /* Cyan */
+  --color-neon-secondary: #ff007f; /* Neon Pink/Magenta */
+  --color-neon-accent: #7b2cbf;    /* Deep Purple */
+  --color-text: #ffffff;
+  
+  --font-logo: 'Orbitron', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-ui: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  
+  --transition-smooth: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Reset Moderno */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--color-bg);
+  font-family: var(--font-ui);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================================================
+   TELA DE CARREGAMENTO (LOADER)
+   ========================================================================== */
+
+.loader-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-bg-darker);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 1.2s cubic-bezier(0.8, 0, 0.2, 1), visibility 1.2s;
+  pointer-events: all;
+}
+
+.loader-wrapper.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loader-content {
+  text-align: center;
+  position: relative;
+}
+
+.loader-ring {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: var(--color-neon-primary);
+  border-bottom-color: var(--color-neon-secondary);
+  animation: spin 2s linear infinite;
+  margin: 0 auto 20px auto;
+  box-shadow: 0 0 15px rgba(0, 243, 255, 0.2), inset 0 0 15px rgba(255, 0, 127, 0.2);
+}
+
+.loader-text {
+  font-family: var(--font-logo);
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: 6px;
+  background: linear-gradient(45deg, var(--color-neon-primary), var(--color-neon-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+  text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+}
+
+.loader-sub {
+  font-size: 0.75rem;
+  letter-spacing: 4px;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   ELEMENTOS DE BACKROUND E OVERLAY
+   ========================================================================== */
+
+#canvas-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.cinematic-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, transparent 30%, rgba(2, 2, 4, 0.95) 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   CONTEÚDO PRINCIPAL
+   ========================================================================== */
+
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.035;
+  pointer-events: none;
+  z-index: 999;
+}
+
+/* Efeito de Scanlines Cinematográficas */
+.cinematic-overlay::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.04));
+  background-size: 100% 4px, 6px 100%;
+  z-index: 2;
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.brand-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+  perspective: 1500px;
+}
+
+/* Moldura Tecnológica (Tech Frame) */
+.tech-frame {
+  position: relative;
+  padding: clamp(20px, 5vw, 40px) clamp(30px, 8vw, 70px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.02);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.01) 0%, transparent 80%);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 8px;
+  transition: border-color 0.8s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+}
+
+.tech-frame::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--color-neon-primary), var(--color-neon-secondary)) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  opacity: 0.12;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tech-frame:hover {
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 0 50px rgba(0, 243, 255, 0.08), 
+    inset 0 0 35px rgba(255, 0, 127, 0.04);
+}
+
+.tech-frame:hover::before {
+  opacity: 0.4;
+}
+
+/* Cantos de Foco (Corner Ticks) */
+.corner-tick {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: var(--color-neon-primary);
+  border-style: solid;
+  opacity: 0.4;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.corner-tick.top-left {
+  top: -2px;
+  left: -2px;
+  border-width: 2px 0 0 2px;
+}
+
+.corner-tick.top-right {
+  top: -2px;
+  right: -2px;
+  border-width: 2px 2px 0 0;
+  border-color: var(--color-neon-secondary);
+}
+
+.corner-tick.bottom-left {
+  bottom: -2px;
+  left: -2px;
+  border-width: 0 0 2px 2px;
+  border-color: var(--color-neon-secondary);
+}
+
+.corner-tick.bottom-right {
+  bottom: -2px;
+  right: -2px;
+  border-width: 0 2px 2px 0;
+}
+
+.tech-frame:hover .corner-tick {
+  opacity: 1;
+  width: 24px;
+  height: 24px;
+}
+
+.tech-frame:hover .corner-tick.top-left,
+.tech-frame:hover .corner-tick.bottom-right {
+  filter: drop-shadow(0 0 5px var(--color-neon-primary));
+}
+
+.tech-frame:hover .corner-tick.top-right,
+.tech-frame:hover .corner-tick.bottom-left {
+  filter: drop-shadow(0 0 5px var(--color-neon-secondary));
+}
+
+/* Logotipo */
+.brand-logo {
+  font-family: var(--font-logo);
+  font-size: clamp(3.5rem, 14vw, 8.5rem);
+  font-weight: 900;
+  letter-spacing: 18px;
+  text-indent: 18px; /* Compensa o letter-spacing no alinhamento central */
+  text-transform: uppercase;
+  position: relative;
+  color: #ffffff;
+  background: linear-gradient(135deg, #ffffff 40%, #b0b0b5 80%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  user-select: none;
+  cursor: default;
+  transform-style: preserve-3d;
+  transition: transform 0.15s ease-out;
+  animation: logo-float 6s ease-in-out infinite;
+}
+
+.brand-logo::before {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, var(--color-neon-primary), var(--color-neon-secondary), transparent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  opacity: 0.4;
+  z-index: -1;
+  filter: blur(12px);
+  animation: logo-glow-pulse 4s ease-in-out infinite alternate;
+  transform: translateZ(-20px);
+}
+
+@keyframes logo-float {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg);
+  }
+  50% {
+    transform: translate3d(0, -12px, 20px) rotateX(1.5deg) rotateY(-1.5deg);
+  }
+}
+
+@keyframes logo-glow-pulse {
+  0% {
+    opacity: 0.3;
+    filter: blur(8px);
+  }
+  100% {
+    opacity: 0.7;
+    filter: blur(18px);
+  }
+}
